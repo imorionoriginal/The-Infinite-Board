@@ -18,6 +18,10 @@ Many thanks to **Fynndo3d** (@fynndo2d on discord) for making app logo!
 
 you can check Fynndo's discord server: [Fyonndo's Chickun Barn](https://discord.com/invite/YzkKtBaDQ4)
 
+and if you found a bug or you want to give a review you can join to my server!
+**[Orion's Dev Network](https://discord.gg/eZ76kUfEP)**
+and my other works: **[Portfolio](https://imorion.lol)**
+
 ## Requirements
 
 - Windows 10 or Windows 11
@@ -54,4 +58,4 @@ The application logo is stored in `public/infinite-table-logo.ico` for the inter
 
 ## License
 
-No license has been selected yet. Until a license is added, all rights are reserved by the copyright holder.
+MIT License, all rights are reserved by ImOrion.
