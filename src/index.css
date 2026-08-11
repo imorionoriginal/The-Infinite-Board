@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #0f0f12;
+  --bg-secondary: #1a1a24;
+  --bg-card: rgba(30, 30, 45, 0.6);
+  --text-primary: #e4e4e7;
+  --text-secondary: #a1a1aa;
+  --accent: #8b5cf6;
+  --accent-glow: rgba(139, 92, 246, 0.3);
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+.light {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --accent: #7c3aed;
+  --accent-glow: rgba(124, 58, 237, 0.2);
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.1);
+}
+
+.tl-watermark_logo {
+  display: none !important;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: transparent;
+  color: var(--text-primary);
+}
+
+body {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 12px;
+}
+
+.note-glow {
+  transition: all 0.2s ease;
+}
+
+.note-glow:hover {
+  box-shadow: 0 0 20px var(--accent-glow), 0 8px 32px rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
+}
+
+.tiptap-editor .ProseMirror {
+  outline: none;
+  min-height: 300px;
+  padding: 1rem 0;
+  font-size: 16px;
+  line-height: 1.75;
+  color: var(--text-primary);
+}
+
+.tiptap-editor .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--text-secondary);
+  pointer-events: none;
+  height: 0;
+}
+
+.tiptap-editor .ProseMirror h1 { font-size: 2em; font-weight: 700; margin: 0.5em 0; }
+.tiptap-editor .ProseMirror h2 { font-size: 1.5em; font-weight: 600; margin: 0.5em 0; }
+.tiptap-editor .ProseMirror h3 { font-size: 1.25em; font-weight: 600; margin: 0.5em 0; }
+
+.tiptap-editor .ProseMirror ul,
+.tiptap-editor .ProseMirror ol {
+  padding-left: 1.5rem;
+  margin: 0.5em 0;
+}
+
+.tiptap-editor .ProseMirror ul[data-type='taskList'] {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tiptap-editor .ProseMirror ul[data-type='taskList'] li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.tiptap-editor .ProseMirror ul[data-type='taskList'] li label input[type='checkbox'] {
+  accent-color: var(--accent);
+  margin-top: 4px;
+}
+
+.tiptap-editor .ProseMirror blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin: 0.5em 0;
+  color: var(--text-secondary);
+}
+
+.tiptap-editor .ProseMirror code {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 4px;
+  padding: 0.1em 0.3em;
+  font-size: 0.9em;
+}
+
+.tiptap-editor .ProseMirror pre {
+  background: var(--bg-secondary);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.tiptap-editor .ProseMirror pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.tiptap-editor .ProseMirror mark {
+  background-color: rgba(139, 92, 246, 0.3);
+  border-radius: 2px;
+  padding: 0.1em 0;
+}
+
+@keyframes flipDown {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(-90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+.flip-animate {
+  animation: flipDown 0.6s ease-in-out;
+}
