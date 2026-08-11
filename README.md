@@ -9,9 +9,14 @@ The application is built with React, TypeScript, Vite, Tauri 2, Rust, SQLite, Ti
 - Infinite canvas with persistent local data
 - Sticky notes with drag, layering, colors and rich text editing
 - Local image asset storage
-- Pomodoro timer, stopwatch and exam countdown widgets
+- Multiple languages option
 - Dark and light themes
-- Windows installer with the project logo
+- Windows installer
+
+## Contributions
+Many thanks to **Fynndo3d** (@fynndo2d on discord) for making app logo!
+
+you can check Fynndo's discord server: [Fyonndo's Chickun Barn](https://discord.com/invite/YzkKtBaDQ4)
 
 ## Requirements
 
@@ -39,20 +44,9 @@ npm run build:windows
 
 The direct application executable is generated at `src-tauri/target/release/the-infinite-table.exe`. The distributable installer is generated in `release/`.
 
-## GitHub Releases
-
-Push a version tag to build and publish the Windows NSIS `.exe` and `.msi` files automatically:
-
-```powershell
-```
-
-The workflow in `.github/workflows/release.yml` creates the GitHub release and uploads the generated Windows bundles.
-
 ## SmartScreen
 
-A newly built Windows executable is unsigned by default. Windows SmartScreen can show a warning for unsigned or low-reputation files even when the application is safe. No application setting or GitHub release option can remove that warning reliably.
-
-Warning-free distribution requires an Authenticode code-signing certificate, secure private-key handling and timestamped signing of the executable and installer. The certificate must be supplied by the publisher and configured in the release pipeline; private keys must never be committed to this repository.
+A newly built Windows executable is unsigned by default. Windows SmartScreen can show a warning for unsigned or low-reputation files even when the application is safe. No application setting or GitHub release option can remove that warning reliably. 
 
 ## Logo
 
