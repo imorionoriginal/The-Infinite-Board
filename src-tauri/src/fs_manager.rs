@@ -16,12 +16,13 @@ pub fn ensure_directories(app: tauri::AppHandle) -> Result<String, String> {
     let imported = base.join("imported");
     let trashcan = base.join("trashcan");
 
-    fs::create_dir_all(&imported)
-        .map_err(|e| format!("Failed to create imported dir: {}", e))?;
-    fs::create_dir_all(&trashcan)
-        .map_err(|e| format!("Failed to create trashcan dir: {}", e))?;
+    fs::create_dir_all(&imported).map_err(|e| format!("Failed to create imported dir: {}", e))?;
+    fs::create_dir_all(&trashcan).map_err(|e| format!("Failed to create trashcan dir: {}", e))?;
 
-    Ok(format!("Directories created at: {}", base.to_string_lossy()))
+    Ok(format!(
+        "Directories created at: {}",
+        base.to_string_lossy()
+    ))
 }
 
 #[tauri::command]
@@ -42,8 +43,7 @@ pub fn import_asset(app: tauri::AppHandle, source_path: String) -> Result<String
     let dest_filename = format!("{}_{}", asset_id, file_name.to_string_lossy());
     let dest_path = imported_dir.join(&dest_filename);
 
-    fs::copy(&source, &dest_path)
-        .map_err(|e| format!("Failed to copy file: {}", e))?;
+    fs::copy(&source, &dest_path).map_err(|e| format!("Failed to copy file: {}", e))?;
 
     Ok(dest_path.to_string_lossy().to_string())
 }
@@ -67,8 +67,7 @@ pub fn trash_asset(app: tauri::AppHandle, local_path: String) -> Result<String, 
 
     let trash_path = trashcan_dir.join(file_name);
 
-    fs::rename(&source, &trash_path)
-        .map_err(|e| format!("Failed to move file to trash: {}", e))?;
+    fs::rename(&source, &trash_path).map_err(|e| format!("Failed to move file to trash: {}", e))?;
 
     Ok(trash_path.to_string_lossy().to_string())
 }
@@ -77,15 +76,18 @@ pub fn trash_asset(app: tauri::AppHandle, local_path: String) -> Result<String, 
 pub fn delete_asset_permanently(file_path: String) -> Result<(), String> {
     let path = PathBuf::from(&file_path);
     if path.exists() {
-        fs::remove_file(&path)
-            .map_err(|e| format!("Failed to delete file: {}", e))?;
+        fs::remove_file(&path).map_err(|e| format!("Failed to delete file: {}", e))?;
     }
     Ok(())
 }
 
 #[tauri::command]
-pub fn save_base64_asset(app: tauri::AppHandle, base64: String, extension: String) -> Result<String, String> {
-    use base64::{Engine as _, engine::general_purpose::STANDARD};
+pub fn save_base64_asset(
+    app: tauri::AppHandle,
+    base64: String,
+    extension: String,
+) -> Result<String, String> {
+    use base64::{engine::general_purpose::STANDARD, Engine as _};
 
     let base = get_assets_base_dir(&app)?;
     let imported_dir = base.join("imported");
@@ -94,15 +96,19 @@ pub fn save_base64_asset(app: tauri::AppHandle, base64: String, extension: Strin
         .map_err(|e| format!("Failed to create imported dir: {}", e))?;
 
     let asset_id = uuid::Uuid::new_v4().to_string();
-    let ext = if extension.starts_with('.') { extension } else { format!(".{}", extension) };
+    let ext = if extension.starts_with('.') {
+        extension
+    } else {
+        format!(".{}", extension)
+    };
     let dest_filename = format!("{}{}", asset_id, ext);
     let dest_path = imported_dir.join(&dest_filename);
 
-    let bytes = STANDARD.decode(&base64)
+    let bytes = STANDARD
+        .decode(&base64)
         .map_err(|e| format!("Failed to decode base64: {}", e))?;
 
-    fs::write(&dest_path, bytes)
-        .map_err(|e| format!("Failed to write file: {}", e))?;
+    fs::write(&dest_path, bytes).map_err(|e| format!("Failed to write file: {}", e))?;
 
     Ok(dest_path.to_string_lossy().to_string())
 }

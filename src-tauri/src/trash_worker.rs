@@ -11,7 +11,10 @@ fn get_trashcan_dir(app: &tauri::AppHandle) -> Result<PathBuf, String> {
 }
 
 #[tauri::command]
-pub fn cleanup_expired_trash(app: tauri::AppHandle, file_paths: Vec<String>) -> Result<u32, String> {
+pub fn cleanup_expired_trash(
+    app: tauri::AppHandle,
+    file_paths: Vec<String>,
+) -> Result<u32, String> {
     let mut deleted_count: u32 = 0;
 
     for file_path in &file_paths {
@@ -32,8 +35,8 @@ pub fn cleanup_expired_trash(app: tauri::AppHandle, file_paths: Vec<String>) -> 
     let trashcan_dir = get_trashcan_dir(&app)?;
     if trashcan_dir.exists() {
         if let Ok(entries) = fs::read_dir(&trashcan_dir) {
-            let three_days_ago = std::time::SystemTime::now()
-                - std::time::Duration::from_secs(72 * 60 * 60);
+            let three_days_ago =
+                std::time::SystemTime::now() - std::time::Duration::from_secs(72 * 60 * 60);
 
             for entry in entries.flatten() {
                 if let Ok(metadata) = entry.metadata() {
@@ -47,10 +50,7 @@ pub fn cleanup_expired_trash(app: tauri::AppHandle, file_paths: Vec<String>) -> 
                                 );
                             } else {
                                 deleted_count += 1;
-                                println!(
-                                    "🗑️ Deleted orphaned trash file: {:?}",
-                                    entry.path()
-                                );
+                                println!("🗑️ Deleted orphaned trash file: {:?}", entry.path());
                             }
                         }
                     }
@@ -59,6 +59,9 @@ pub fn cleanup_expired_trash(app: tauri::AppHandle, file_paths: Vec<String>) -> 
         }
     }
 
-    println!("✅ Trash cleanup completed: {} files deleted", deleted_count);
+    println!(
+        "✅ Trash cleanup completed: {} files deleted",
+        deleted_count
+    );
     Ok(deleted_count)
 }
